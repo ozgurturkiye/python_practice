@@ -39,6 +39,10 @@ while True:
     elif choice == "5":
         pass
 
+    elif choice == "Q" or choice == "q":
+        print("Çıkılıyor....")
+        break
+
     else:
         print("Yanlış giriş.")
         print("Aşağıdaki seçeneklerden birini giriniz:", metin)
