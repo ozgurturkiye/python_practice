@@ -17,6 +17,11 @@ go_on_champion = "Devam etmek için bir tuşa basınız!"
 
 ogrenci_liste = ["Ali Taş", "Mehmet İnce", "Ayşe Uzun"]
 
+sozluk = {"book": "kitap", "window": "pencere", "cat": "kedi"}
+
+
+
+
 def topla(a, b): # Toplama yapan fonksiyon :)
     return a + b
 
@@ -45,7 +50,7 @@ while True: # Q veya q seçilmediği sürece program çalışır.
 
     elif choice == "3":
         liste_metin = """
-        (1) Çğrenci listesini görüntüle
+        (1) Öğrenci listesini görüntüle
         (2) Yeni öğrenci ekle
         (3) Öğrenci ismi düzenle
         (4) Listeden öğrenci sil
@@ -85,7 +90,6 @@ while True: # Q veya q seçilmediği sürece program çalışır.
 
                 input(go_on_champion)
 
-
             elif liste_secim == "5":
                 print("Liste menüsünden çıkıldı.")
                 break
@@ -94,7 +98,43 @@ while True: # Q veya q seçilmediği sürece program çalışır.
 
 
     elif choice == "4":
-        pass
+        sozluk_metin = """
+        (1) Sözlüğü görüntüle
+        (2) Yeni kelime ekle
+        (3) Kelime ara
+        (4) Çıkış.
+        """
+
+        while True:
+            print(sozluk_metin)
+            sozluk_secim = input("Yapmak istediğiniz işlemi seçiniz: ")
+
+            if sozluk_secim == "1":
+                print(sozluk)
+
+            elif sozluk_secim == "2":
+                sozluk_key = input("Eklemek istediğiniz kelimeyi giriniz: ")
+                sozluk_value = input("Kelimenin anlamını giriniz: ")
+                sozluk[sozluk_key] = sozluk_value
+
+                print("{} kelimesi başarıyla eklendi.".format(sozluk[sozluk_key]))
+                input(go_on_champion)
+
+            elif sozluk_secim == "3":
+                kelime = input("Aradığınız kelimeyi giriniz.")
+                if kelime in sozluk:
+                    print(kelime + ":" + sozluk[kelime])
+                else:
+                    print("Aradığınız kelime malesef büyük sözlüğümüzde yok!")
+
+                input(go_on_champion)
+
+            elif sozluk_secim == "4":
+                print("Sözlükten çıkıldı.")
+                break
+            else:
+                print("Yanlış giriş.")
+
 
     elif choice == "5":
         pass
