@@ -1,7 +1,7 @@
 #1. Program - Python shell de çalışan 5 temel uygulama denemesi :)
 metin = """
 (1) Toplama yap
-(2) Faktoriye bul
+(2) Faktoriyel bul
 (3) Öğrenci listesi işlemleri
 (4) İngilizce sözlük işlemleri
 (5) Asker oluştur :)
@@ -13,8 +13,16 @@ Lütfen Seçiminizi yapınız
 
 d ="Devam etmek için bir tuşa basınız"
 
+go_on_champion = "Devam etmek için bir tuşa basınız!"
+
 def topla(a, b):
     return a + b
+
+def factorial(a):
+    if a < 2:
+        return 1
+    else:
+        return a * factorial(a - 1)
 
 
 while True:
@@ -26,9 +34,12 @@ while True:
         number1 = int(input("1. sayıyı giriniz: "))
         number2 = int(input("2. sayıyı giriniz: "))
         print("Sonuç: ", topla(number1, number2))
+        input(go_on_champion)
 
     elif choice == "2":
-        pass
+        factorial_number = int(input("Faktoriyelini bulmak istediğiniz sayıyı giriniz: "))
+        print("Sonuç: ", factorial(factorial_number))
+        input(go_on_champion)
 
     elif choice == "3":
         pass
