@@ -19,6 +19,19 @@ ogrenci_liste = ["Ali Taş", "Mehmet İnce", "Ayşe Uzun"]
 
 sozluk = {"book": "kitap", "window": "pencere", "cat": "kedi"}
 
+class Asker(object):
+    """ Asker sınıfı için gerekli açıklamaları burada yazacağız."""
+    def __init__(self, name, power):
+        self.name = name
+        self.power = power
+        print("{} isimli asker başarıyla oluşturuldu.".format(self.name))
+        self.attack()
+
+    def attack(self):
+        self.attack_power = self.power * 10
+        print("Askerin normal gücü: ", self.power)
+        print("Askerin saldırı gücü: ", self.attack_power)
+        input(go_on_champion)
 
 
 
@@ -30,6 +43,7 @@ def factorial(a): # Faktoriyel hesaplayan fonksiyon reqursive yalnız :)
         return 1
     else:
         return a * factorial(a - 1)
+
 
 
 while True: # Q veya q seçilmediği sürece program çalışır.
@@ -48,7 +62,7 @@ while True: # Q veya q seçilmediği sürece program çalışır.
         print("Sonuç: ", factorial(factorial_number))
         input(go_on_champion)
 
-    elif choice == "3":
+    elif choice == "3": # Tabi bunu nesne yönelimli yapsak çok daha şık olacak.
         liste_metin = """
         (1) Öğrenci listesini görüntüle
         (2) Yeni öğrenci ekle
@@ -137,7 +151,10 @@ while True: # Q veya q seçilmediği sürece program çalışır.
 
 
     elif choice == "5":
-        pass
+        name = input("Askerinizin ismini giriniz: ")
+        power = int(input("Askerinizin gücünü giriniz 0-100: "))
+        soldier = Asker(name, power)
+
 
     elif choice == "Q" or choice == "q":
         print("Çıkılıyor....")
