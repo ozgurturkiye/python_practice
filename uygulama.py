@@ -71,6 +71,19 @@ while True: # Q veya q seçilmediği sürece program çalışır.
                 ogrenci_duzenleme = input("Yeni ismi giriniz: ")
                 ogrenci_liste[ogrenci_sirasi] = ogrenci_duzenleme
 
+            elif liste_secim == "4":
+                ogrenci_sirasi = int(input("Silmek istediğiniz öğrenci sıra numarası giriniz: "))
+                print(ogrenci_liste[ogrenci_sirasi], "isimli öğrenciyi sileceksiniz")
+                ogrenci_sil = input("Silmek için 'E' iptal için 'H' ")
+                if ogrenci_sil == "E":
+                    print(ogrenci_liste[ogrenci_sirasi],"isimli öğrenci silindi")
+                    del ogrenci_liste[ogrenci_sirasi]
+                elif ogrenci_sil == "H":
+                    print("İşlem iptal edildi")
+                else:
+                    print("Yanlış giriş yaptınız silme işlemi iptal edildi!")
+
+                input(go_on_champion)
 
 
             elif liste_secim == "5":
