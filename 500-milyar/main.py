@@ -1,10 +1,12 @@
 import sys
 import sqlite3
 import random
-
+import signal
+import os
+import time
 
 class Question(): # Sorular sınıfı
-  with sqlite3.connect('vt.sqlite') as vt:
+  with sqlite3.connect('vt.sqlite') as vt:  #vt.sqlite isimli veritabanını kullan.
     im = vt.cursor()
 
     im.execute("""SELECT * FROM questions WHERE difficulty = "1" """)
@@ -28,14 +30,29 @@ class Announcer(): # Yarışma sunucusu sınıfı
   def __init__(self):
     self.name = "Özgür"
 
+  def wait_for_question(self):
+    print("Sorunuz hazırlanıyor...")
+    for i in range(6):
+        print("*", end="", flush=True) # flush kullanmazsa sonda yazıyor.
+        time.sleep(0.5)
+    print("")
+
   def ask_question(self, arg1, arg2, arg3):
-    print(arg1, arg2, arg3) # Soruyu göster
+    print(arg1, "Doğru Şık:", arg2, "Zorluk:", arg3) # Soruyu göster
+    print("*" * 20, "5 Saniye içinde cevabı giriniz!!!", "*" * 20)
 
   def say_thanks(self):
     print("Tebrikler doğru cevap, toplam ödülünüz:", yarışmacı.level_money_price[yarışmacı.level])
 
   def say_good_bye(self):
     print("Yanlış Cevap! Yarışma bitti.")
+    if yarışmacı.level >= 6:
+      print("Ödülünüz:", yarışmacı.level_money_price[6], "TL")
+    elif yarışmacı.level >= 3:
+      print("Ödülünüz:", yarışmacı.level_money_price[3], "TL")
+    else:
+      print("Hiç ödül kazanamadınız!")
+
     self.finish_programme()
 
   def finish_programme(self):
@@ -49,28 +66,46 @@ class Competitor(): # Yarışmacı
 
   def __init__(self):
     self.name = input("Lütfen adınızı giriniz: ")
+    self.answer = ""
 
   def answer_question(self):
-    return input("Lütfen doğru şıkkı giriniz:").upper()
+    self.answer = input("Lütfen doğru şıkkı giriniz:").upper() # user answer
+
+  def answer_is_right(self, verilen_cevap):
+      signal.alarm(0)
+      if self.answer == verilen_cevap:
+          return True
+      else:
+          return False
 
   def level_up(self):
     self.level += 1
 
   def level_control(self):
-    if self.level == 15: # 5 soruyu da bilirse büyük ödülü kazanır
-      print("Büyük ödülü kazandınız")
+    if self.level == 9:# 15 soruyu da bilirse büyük ödülü kazanır
+      print("Büyük ödülü kazandınız ödülünüz ***1000000TL***")
       sunucu.finish_programme()
 
 
 sunucu = Announcer()
 yarışmacı = Competitor()
-sorular = Question()
+sorular = Question() # Burada sorular zorluk derecesine göre sıralanıp sorular listesi geliyor.
 
-# Burada soruları sıralayıp temiz bir liste yapıp for i in şeklinde kodu çalıştırsak çok süper olur. Tüm iş burada bitmiş sayılır o zaman :)
+def handler(signum, frame):
+    print('5 saniyede cevap girmediniz! ', signum)
+    sunucu.say_good_bye()
+
+# Set the signal handler and a 5-second alarm
+signal.signal(signal.SIGALRM, handler)
+
 
 for soru, cevap, zorluk in sorular.questions:
+  os.system("clear") # Her sorunun başında ekranı temizle
+  sunucu.wait_for_question()
   sunucu.ask_question(soru, cevap, zorluk) # Soru sor
-  if yarışmacı.answer_question() == cevap: # Verilen cevap doğru şık ile aynı mı
+  signal.alarm(5)
+  yarışmacı.answer_question() # Take user answer
+  if yarışmacı.answer_is_right(cevap): # Verilen cevap doğru şık ile aynı mı
     yarışmacı.level_up()
     yarışmacı.level_control()
     sunucu.say_thanks()
