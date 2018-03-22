@@ -31,7 +31,7 @@ class Announcer(): # Yarışma sunucusu sınıfı
     self.name = "Özgür"
 
   def wait_for_question(self):
-    print("Sorunuz hazırlanıyor...")
+    print(yarışmacı.name, "sorunuz hazırlanıyor...")
     for i in range(6):
         print("*", end="", flush=True) # flush kullanmazsa sonda yazıyor.
         time.sleep(0.5)
